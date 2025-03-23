@@ -1,0 +1,41 @@
+<!-- templates/add_book.html -->
+{% extends 'layout.html' %}
+
+{% block title %}
+    uodateBook
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>修改书本：{{ book_id }}</h1>
+    <form method="post" action="{% url 'updateBook' book.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="bookName" class="form-label">书名</label>
+            <input type="text" class="form-control" id="bookName" name="bookName" maxlength="128" placeholder="请输入书名">
+        </div>
+        <div class="mb-3">
+            <label for="picture" class="form-label">封面图片</label>
+            <input type="file" class="form-control" id="picture" name="picture" accept="image/*" >
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">价格</label>
+            <input type="number" class="form-control" id="price" name="price" placeholder="请输入价格">
+        </div>
+        <div class="mb-3">
+            <label for="info" class="form-label">简介</label>
+            <textarea class="form-control" id="info" name="info" rows="4" placeholder="请输入书籍简介"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

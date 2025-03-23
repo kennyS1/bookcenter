@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user',
+    'user.apps.UserConfig',
+    'book.apps.BookConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -129,4 +133,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user.User'
+
+
+#上传的图片, 媒体文件设置
+MEDIA_URL = '/media/'  # 访问媒体文件的 URL 前缀
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 存储媒体文件的目录
 

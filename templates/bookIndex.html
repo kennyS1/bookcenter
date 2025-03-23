@@ -1,11 +1,48 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
     book
 {% endblock %}
 
 {% block content %}
-    <h1>book</h1>
+    <div class="container mt-5">
+        <h1>Car</h1>
+        <span>Click the picture to delete Book</span>
+        <h2><a href="/book/addbook/">addCar</a></h2>
+        {% if books %}
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card book-card">
+                            <div class="card-body">
+                                <div class="image-container">
+                                    {% if book.picture %}
+                                    <a href="{% url 'updateBook' book.id %}">
+                                        <img src="{{ book.picture.url }}" alt="{{ book.bookName }}" class="img-fluid" style="max-height: 150px;">
+                                    </a>
+                                    <!--delete button-->
+                                    <form method="post" action="{% url 'deleteBook' book.id %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm delete-btn position-absolute" style="top: 10px; right: 10px;" onclick="return confirm('确定要删除书籍“{{ book.bookName }}”吗？此操作无法撤销。');">delete</button>
+                                    </form>
+
+                                    {% else %}
+                                        <img src="https://via.placeholder.com/150" alt="No Image">
+                                    {% endif %}
+                                </div>
+                                <h5 class="card-title">{{ book.bookName }}</h5>
+                                <p class="card-text">价格：￥{{ book.price }}</p>
+                                <p class="card-text">{{ book.info|truncatewords:20 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>暂无书籍，请添加！</p>
+        {% endif %}
+    </div>
 {% endblock %}
 
 

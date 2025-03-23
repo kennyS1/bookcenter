@@ -62,7 +62,6 @@ def register(request):
                 password=password,
             )
             user.save()
-            login(request, user)  # 现在调用的是 django.contrib.auth.login
             messages.success(request, "注册成功！")
             return redirect("register")
         except Exception as e:
